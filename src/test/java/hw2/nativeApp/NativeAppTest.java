@@ -1,9 +1,7 @@
 package hw2.nativeApp;
 
-import hw2.setup.PropertyFileType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import hw2.pages.nativeApp.BudgetActivityPage;
 import hw2.pages.nativeApp.RegistrationPage;
@@ -32,16 +30,8 @@ public class NativeAppTest extends DriverSetup {
     public NativeAppTest() throws IOException {
     }
 
-    /**
-     * This method sets all necessary data
-     * for test completing
-     * @throws Exception
-     */
-    @BeforeSuite(groups = {"native"})
-    void setUpNative() throws Exception {
-        setPropertyFileName(PropertyFileType.NATIVE);
-        prepareDriver();
-
+    @Test(groups = {"native"})
+    public void nativeAppTest() throws Exception {
         TEST_EMAIL = getProp("test_email");
         TEST_USERNAME = getProp("test_username");
         TEST_PASSWORD = getProp("test_password");
@@ -50,10 +40,7 @@ public class NativeAppTest extends DriverSetup {
         this.signInPage = new SignInPage(driver());
         this.registrationPage = new RegistrationPage(driver());
         this.budgetActivityPage = new BudgetActivityPage(driver());
-    }
 
-    @Test(groups = {"native"})
-    public void nativeAppTest() throws Exception {
         // Clicking registration button for registration
         // of a new test user
         signInPage.goToRegistrationPage();
@@ -78,15 +65,6 @@ public class NativeAppTest extends DriverSetup {
         assertEquals(budgetActivityPage.getPageTitle(), TEST_PAGE_TITLE,
                 String.format("Expected %s pagetitle, but got %s",
                         TEST_PAGE_TITLE, budgetActivityPage.getPageTitle()));
-    }
-
-    /**
-     * This method quits application under testing
-     * @throws Exception
-     */
-    @AfterSuite(groups = {"native"})
-    public void tearDown() throws Exception {
-        driver().quit();
     }
 
 }

@@ -1,9 +1,7 @@
 package hw2.webApp;
 
-import hw2.setup.PropertyFileType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import hw2.pages.webApp.SearchPage;
 import hw2.pages.webApp.SearchResultPage;
@@ -27,24 +25,13 @@ public class WebAppTest extends DriverSetup {
     public WebAppTest() throws IOException {
     }
 
-    /**
-     * This method sets all necessary data
-     * for test completing
-     * @throws Exception
-     */
-    @BeforeSuite(groups = {"web"})
-    void setUpWeb() throws Exception {
-        setPropertyFileName(PropertyFileType.WEB);
-        prepareDriver();
-
+    @Test(groups = {"web"})
+    public void webAppTest() throws Exception {
         TEST_SEARCH_PHRASE = getProp("test_search_phrase");
 
         this.searchPage = new SearchPage(driver());
         this.searchResultPage = new SearchResultPage(driver());
-    }
 
-    @Test(groups = {"web"}, description = "add it")
-    public void webAppTest() throws Exception {
         // Going to site under testing:
         // google.com
         driver().get(SUT);
@@ -55,15 +42,6 @@ public class WebAppTest extends DriverSetup {
         driverWait().until(ExpectedConditions.urlContains(SUT + "/search"));
         driverWait().until(ExpectedConditions.visibilityOf(searchResultPage.getResultListAsElement()));
         assertFalse(searchResultPage.getResultsList().isEmpty(), "The list of results is empty!");
-    }
-
-    /**
-     * This method quits browser
-     * @throws Exception
-     */
-    @AfterSuite(groups = {"web"})
-    public void tearDown() throws Exception {
-        driver().quit();
     }
 
 }
