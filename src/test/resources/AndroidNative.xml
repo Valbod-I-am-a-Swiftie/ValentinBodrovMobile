@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Native Android Test">
+
+    <test name="android_native_test">
+        <groups>
+            <run>
+                <include name="android_native"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="hw3.*"/>
+        </packages>
+    </test>
+</suite>

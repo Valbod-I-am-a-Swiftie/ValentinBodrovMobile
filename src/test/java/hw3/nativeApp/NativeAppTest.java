@@ -1,12 +1,12 @@
-package hw2.nativeApp;
+package hw3.nativeApp;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterGroups;
 import org.testng.annotations.Test;
-import hw2.pages.nativeApp.BudgetActivityPage;
-import hw2.pages.nativeApp.RegistrationPage;
-import hw2.pages.nativeApp.SignInPage;
-import hw2.setup.DriverSetup;
+import hw3.pages.nativeApp.BudgetActivityPage;
+import hw3.pages.nativeApp.RegistrationPage;
+import hw3.pages.nativeApp.SignInPage;
+import hw3.setup.DriverSetup;
 
 import java.io.IOException;
 
@@ -30,7 +30,7 @@ public class NativeAppTest extends DriverSetup {
     public NativeAppTest() throws IOException {
     }
 
-    @Test(groups = {"native"})
+    @Test(groups = {"android_native"})
     public void nativeAppTest() throws Exception {
         TEST_EMAIL = getProp("test_email");
         TEST_USERNAME = getProp("test_username");
@@ -65,6 +65,11 @@ public class NativeAppTest extends DriverSetup {
         assertEquals(budgetActivityPage.getPageTitle(), TEST_PAGE_TITLE,
                 String.format("Expected %s pagetitle, but got %s",
                         TEST_PAGE_TITLE, budgetActivityPage.getPageTitle()));
+    }
+
+    @AfterGroups(alwaysRun = true, groups = "android_native")
+    public void tearDown() throws Exception {
+        driver().quit();
     }
 
 }

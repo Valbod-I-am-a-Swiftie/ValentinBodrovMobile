@@ -1,5 +1,7 @@
-package hw2.setup;
+package hw3.setup;
 
+import hw3.api.MobileCloudApi;
+import hw3.api.TokenReaderSingleton;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -23,7 +25,10 @@ public class DriverSetup extends TestProperties {
     private String TEST_PLATFORM;
     private String BROWSER;
     private String DRIVER;
-    private String DEVICE;
+    private String UDID;
+    private String APP_PACKAGE;
+    private String APP_ACTIVITY;
+    private String TOKEN;
 
     /**
      * This method prepares driver for tests
@@ -37,15 +42,30 @@ public class DriverSetup extends TestProperties {
         BROWSER = getProp("browser");
         TEST_PLATFORM = getProp("platform");
         DRIVER = getProp("driver");
-        DEVICE = getProp("device");
+        UDID = getProp("udid");
+        APP_PACKAGE = getProp("app_package");
+        APP_ACTIVITY = getProp("app_activity");
+        TOKEN = TokenReaderSingleton.getInstance().getProperty("token");
+
+        DRIVER = DRIVER.replace("***", TOKEN);
 
         capabilities = new DesiredCapabilities();
-        capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, DEVICE);
+        capabilities.setCapability(MobileCapabilityType.UDID, UDID);
         capabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, TEST_PLATFORM);
+        capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 60);
 
         if(AUT != null && SUT == null) {
-            File app = new File(AUT);
-            capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+            File app = new File(getProp("aut"));
+            MobileCloudApi
+                    .with()
+                    .takeInUse(getProp("udid"));
+            MobileCloudApi
+                    .with()
+                    .serial(getProp("udid"))
+                    .file(app)
+                    .installApp(getProp("udid"));
+            capabilities.setCapability("appPackage", APP_PACKAGE);
+            capabilities.setCapability("appActivity", APP_ACTIVITY);
         } else if (SUT != null && AUT == null) {
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, BROWSER);
         } else {

@@ -1,6 +1,6 @@
-package hw2.pages.webApp;
+package hw3.pages.webApp;
 
-import hw2.pages.AbstractBasePage;
+import hw3.pages.AbstractBasePage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

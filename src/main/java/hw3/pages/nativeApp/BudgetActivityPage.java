@@ -1,6 +1,6 @@
-package hw2.pages.nativeApp;
+package hw3.pages.nativeApp;
 
-import hw2.pages.AbstractBasePage;
+import hw3.pages.AbstractBasePage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;

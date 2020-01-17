@@ -1,4 +1,4 @@
-package hw2.pages;
+package hw3.pages;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.support.PageFactory;

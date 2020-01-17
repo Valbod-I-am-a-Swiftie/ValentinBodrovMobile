@@ -1,4 +1,4 @@
-package hw2.setup;
+package hw3.setup;
 
 /**
  * This enum contains information about
@@ -6,8 +6,8 @@ package hw2.setup;
  */
 public enum PropertyFileType {
 
-    WEB("web.properties"),
-    NATIVE("native.properties");
+    IOS_WEB("ios.web.properties"),
+    ANDROID_NATIVE("android.native.properties");
 
     String fileType;
 

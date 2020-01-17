@@ -1,11 +1,11 @@
-package hw2.webApp;
+package hw3.webApp;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.AfterGroups;
 import org.testng.annotations.Test;
-import hw2.pages.webApp.SearchPage;
-import hw2.pages.webApp.SearchResultPage;
-import hw2.setup.DriverSetup;
+import hw3.pages.webApp.SearchPage;
+import hw3.pages.webApp.SearchResultPage;
+import hw3.setup.DriverSetup;
 
 import java.io.IOException;
 
@@ -25,10 +25,9 @@ public class WebAppTest extends DriverSetup {
     public WebAppTest() throws IOException {
     }
 
-    @Test(groups = {"web"})
+    @Test(groups = {"ios_web"})
     public void webAppTest() throws Exception {
         TEST_SEARCH_PHRASE = getProp("test_search_phrase");
-
         this.searchPage = new SearchPage(driver());
         this.searchResultPage = new SearchResultPage(driver());
 
@@ -38,10 +37,15 @@ public class WebAppTest extends DriverSetup {
         driverWait().until(ExpectedConditions.urlContains(SUT));
 
         // Searching test phrase and matching if the list of results isn't empty
-        searchPage.setTextInSearchField(TEST_SEARCH_PHRASE + '\n');
+        searchPage.setTextInSearchField(TEST_SEARCH_PHRASE);
         driverWait().until(ExpectedConditions.urlContains(SUT + "/search"));
         driverWait().until(ExpectedConditions.visibilityOf(searchResultPage.getResultListAsElement()));
         assertFalse(searchResultPage.getResultsList().isEmpty(), "The list of results is empty!");
+    }
+
+    @AfterGroups(alwaysRun = true, groups = "ios_web")
+    public void tearDown() throws Exception {
+        driver().quit();
     }
 
 }

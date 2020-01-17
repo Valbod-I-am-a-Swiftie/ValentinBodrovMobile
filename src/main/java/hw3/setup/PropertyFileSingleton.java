@@ -1,4 +1,4 @@
-package hw2.setup;
+package hw3.setup;
 
 /**
  * This enum contains information about

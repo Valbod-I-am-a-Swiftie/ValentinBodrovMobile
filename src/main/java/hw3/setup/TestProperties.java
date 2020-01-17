@@ -1,4 +1,4 @@
-package hw2.setup;
+package hw3.setup;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -25,7 +25,9 @@ public class TestProperties {
      * @throws IOException
      */
     private Properties getCurrentProps() throws IOException {
-        FileInputStream in = new FileInputStream(String.format("%s/%s", System.getProperty("user.dir"), PropertyFileSingleton.FILE_NAME_INSTANCE.getFileName()));
+        FileInputStream in = new FileInputStream(
+                String.format("%s/%s", System.getProperty("user.dir"),
+                        PropertyFileSingleton.FILE_NAME_INSTANCE.getFileName()));
         currentProps.load(in);
         in.close();
         return currentProps;

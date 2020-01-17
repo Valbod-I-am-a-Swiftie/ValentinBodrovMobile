@@ -1,0 +1,15 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Web Ios Test">
+
+    <test name="ios_web_test">
+        <groups>
+            <run>
+                <include name="ios_web"/>
+            </run>
+        </groups>
+
+        <packages>
+            <package name="hw3.*"/>
+        </packages>
+    </test>
+</suite>
