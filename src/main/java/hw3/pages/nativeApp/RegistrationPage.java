@@ -3,6 +3,7 @@ package hw3.pages.nativeApp;
 import hw3.pages.AbstractBasePage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 /**
@@ -11,19 +12,40 @@ import org.openqa.selenium.support.FindBy;
  */
 public class RegistrationPage extends AbstractBasePage {
 
-    @FindBy(id = APP_PACKAGE_NAME + "registration_email")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "registration_email"),
+            @FindBy(xpath = "//XCUIElementTypeTextField[@value='user@example.com']")
+    })
     private WebElement registrationEmailTextField;
 
-    @FindBy(id = APP_PACKAGE_NAME + "registration_username")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "registration_username"),
+            @FindBy(xpath = "//XCUIElementTypeTextField[@value='TimApple']")
+    })
     private WebElement usernameTextField;
 
-    @FindBy(id = APP_PACKAGE_NAME + "registration_password")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "registration_password"),
+            @FindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Required']")
+    })
     private WebElement passwordTextField;
 
-    @FindBy(id = APP_PACKAGE_NAME + "registration_confirm_password")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "registration_confirm_password"),
+            @FindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Repeat please']")
+    })
     private WebElement confirmPasswordTextField;
 
-    @FindBy(id = APP_PACKAGE_NAME + "register_new_account_button")
+    @FindAll({
+            @FindBy(xpath = "//*[@text='I read agreaments and agree wit it']"),
+            @FindBy(xpath = "//XCUIElementTypeSwitch")
+    })
+    private WebElement confirmSwitch;
+
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "register_new_account_button"),
+            @FindBy(xpath = "//XCUIElementTypeStaticText[@name='Register new account']")
+    })
     private WebElement registerButton;
 
     public RegistrationPage(AppiumDriver driver) {
@@ -32,6 +54,10 @@ public class RegistrationPage extends AbstractBasePage {
 
     public WebElement getRegistrationEmailTextField() {
         return registrationEmailTextField;
+    }
+
+    public WebElement getRegisterButton() {
+        return registerButton;
     }
 
     public void setEmailTextField(final String email) {
@@ -48,6 +74,10 @@ public class RegistrationPage extends AbstractBasePage {
 
     public void setConfirmPasswordTextField(final String password) {
         confirmPasswordTextField.sendKeys(password);
+    }
+
+    public void setConfirmSwitchOn() {
+        confirmSwitch.click();
     }
 
     public void registerNewUser() {

@@ -18,8 +18,32 @@ public class Hooks extends DriverSetup {
      * @throws Exception
      */
     @BeforeSuite(groups = {"android_native"})
-    void setUpNative() throws Exception {
+    void setUpAndroidNative() throws Exception {
         setPropertyFileName(PropertyFileType.ANDROID_NATIVE);
+        prepareDriver();
+    }
+
+    /**
+     * This method prepares driver for
+     * manipulations with ios native application
+     *
+     * @throws Exception
+     */
+    @BeforeSuite(groups = {"ios_native"})
+    void setUpIosNative() throws Exception {
+        setPropertyFileName(PropertyFileType.IOS_NATIVE);
+        prepareDriver();
+    }
+
+    /**
+     * This method prepares driver for
+     * manipulations with Android web application
+     *
+     * @throws Exception
+     */
+    @BeforeSuite(groups = {"android_web"})
+    void setUpAndroidWeb() throws Exception {
+        setPropertyFileName(PropertyFileType.ANDROID_WEB);
         prepareDriver();
     }
 

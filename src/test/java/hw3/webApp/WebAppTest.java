@@ -25,7 +25,7 @@ public class WebAppTest extends DriverSetup {
     public WebAppTest() throws IOException {
     }
 
-    @Test(groups = {"ios_web"})
+    @Test(groups = {"android_web", "ios_web"})
     public void webAppTest() throws Exception {
         TEST_SEARCH_PHRASE = getProp("test_search_phrase");
         this.searchPage = new SearchPage(driver());
@@ -43,7 +43,7 @@ public class WebAppTest extends DriverSetup {
         assertFalse(searchResultPage.getResultsList().isEmpty(), "The list of results is empty!");
     }
 
-    @AfterGroups(alwaysRun = true, groups = "ios_web")
+    @AfterGroups(alwaysRun = true, groups = {"android_web", "ios_web"})
     public void tearDown() throws Exception {
         driver().quit();
     }

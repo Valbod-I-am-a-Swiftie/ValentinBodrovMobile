@@ -19,16 +19,19 @@ public class DriverSetup extends TestProperties {
     private AppiumDriver driverSingle = null;
     private static WebDriverWait waitSingle;
     private DesiredCapabilities capabilities;
+    private static boolean installed = false;
 
     private String AUT;
     protected String SUT;
-    private String TEST_PLATFORM;
+    protected String TEST_PLATFORM;
     private String BROWSER;
     private String DRIVER;
     private String UDID;
     private String APP_PACKAGE;
     private String APP_ACTIVITY;
     private String TOKEN;
+    private String BUNDLE_ID;
+    private String AUTOMATION_NAME;
 
     /**
      * This method prepares driver for tests
@@ -46,6 +49,8 @@ public class DriverSetup extends TestProperties {
         APP_PACKAGE = getProp("app_package");
         APP_ACTIVITY = getProp("app_activity");
         TOKEN = TokenReaderSingleton.getInstance().getProperty("token");
+        BUNDLE_ID = getProp("bundle_id");
+        AUTOMATION_NAME = getProp("automation_name");
 
         DRIVER = DRIVER.replace("***", TOKEN);
 
@@ -55,17 +60,30 @@ public class DriverSetup extends TestProperties {
         capabilities.setCapability(MobileCapabilityType.NEW_COMMAND_TIMEOUT, 60);
 
         if(AUT != null && SUT == null) {
-            File app = new File(getProp("aut"));
-            MobileCloudApi
-                    .with()
-                    .takeInUse(getProp("udid"));
-            MobileCloudApi
-                    .with()
-                    .serial(getProp("udid"))
-                    .file(app)
-                    .installApp(getProp("udid"));
-            capabilities.setCapability("appPackage", APP_PACKAGE);
-            capabilities.setCapability("appActivity", APP_ACTIVITY);
+            if (!installed) {
+                File app = new File(getProp("aut"));
+                MobileCloudApi
+                        .with()
+                        .takeInUse(getProp("udid"));
+                MobileCloudApi
+                        .with()
+                        .serial(getProp("udid"))
+                        .file(app)
+                        .installApp(getProp("udid"));
+                installed = true;
+            }
+            switch (TEST_PLATFORM) {
+                case "Android":
+                    capabilities.setCapability("appPackage", APP_PACKAGE);
+                    capabilities.setCapability("appActivity", APP_ACTIVITY);
+                    break;
+                case "IOS":
+                    capabilities.setCapability("bundleId", BUNDLE_ID);
+                    capabilities.setCapability("automationName", AUTOMATION_NAME);
+                    break;
+                default:
+                    throw new Exception("Unknown mobile platform");
+            }
         } else if (SUT != null && AUT == null) {
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, BROWSER);
         } else {
@@ -95,7 +113,7 @@ public class DriverSetup extends TestProperties {
      */
     protected WebDriverWait driverWait() throws Exception {
         if (waitSingle == null) {
-            waitSingle = new WebDriverWait(driver(), 20);
+            waitSingle = new WebDriverWait(driver(), 25);
         }
         return waitSingle;
     }

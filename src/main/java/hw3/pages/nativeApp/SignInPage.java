@@ -3,6 +3,7 @@ package hw3.pages.nativeApp;
 import hw3.pages.AbstractBasePage;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 
 /**
@@ -11,16 +12,28 @@ import org.openqa.selenium.support.FindBy;
  */
 public class SignInPage extends AbstractBasePage {
 
-    @FindBy(id = APP_PACKAGE_NAME + "register_button")
+    @FindAll({
+            @FindBy(xpath = "//XCUIElementTypeStaticText[@name='Register new account']"),
+            @FindBy(id = APP_PACKAGE_NAME + "register_button")
+    })
     private WebElement registerNewAccountButton;
 
-    @FindBy(id = APP_PACKAGE_NAME + "login_email")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "login_email"),
+            @FindBy(xpath = "//XCUIElementTypeTextField[@value='user@example.com']")
+    })
     private WebElement loginEmailTextField;
 
-    @FindBy(id = APP_PACKAGE_NAME + "login_pwd")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "login_pwd"),
+            @FindBy(xpath = "//XCUIElementTypeSecureTextField[@value='Required']")
+    })
     private WebElement loginPasswordTextField;
 
-    @FindBy(id = APP_PACKAGE_NAME + "email_sign_in_button")
+    @FindAll({
+            @FindBy(id = APP_PACKAGE_NAME + "email_sign_in_button"),
+            @FindBy(xpath = "//XCUIElementTypeStaticText[@name='Sign In']")
+    })
     private WebElement signInButton;
 
     public SignInPage(AppiumDriver driver) {

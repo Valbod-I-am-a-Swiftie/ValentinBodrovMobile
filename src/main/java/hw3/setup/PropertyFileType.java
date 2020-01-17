@@ -6,8 +6,10 @@ package hw3.setup;
  */
 public enum PropertyFileType {
 
-    IOS_WEB("ios.web.properties"),
-    ANDROID_NATIVE("android.native.properties");
+    ANDROID_NATIVE("android.native.properties"),
+    IOS_NATIVE("ios.native.properties"),
+    ANDROID_WEB("android.web.properties"),
+    IOS_WEB("ios.web.properties");
 
     String fileType;
 

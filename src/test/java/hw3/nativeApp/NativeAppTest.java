@@ -30,7 +30,7 @@ public class NativeAppTest extends DriverSetup {
     public NativeAppTest() throws IOException {
     }
 
-    @Test(groups = {"android_native"})
+    @Test(groups = {"android_native", "ios_native"})
     public void nativeAppTest() throws Exception {
         TEST_EMAIL = getProp("test_email");
         TEST_USERNAME = getProp("test_username");
@@ -52,6 +52,7 @@ public class NativeAppTest extends DriverSetup {
         registrationPage.setUsernameTextField(TEST_USERNAME);
         registrationPage.setPasswordTextField(TEST_PASSWORD);
         registrationPage.setConfirmPasswordTextField(TEST_PASSWORD);
+        registrationPage.setConfirmSwitchOn();
         registrationPage.registerNewUser();
 
         // Signing in and going to Budget Activity Page
@@ -61,13 +62,23 @@ public class NativeAppTest extends DriverSetup {
         signInPage.signIn();
 
         // Checking if the page title matches to expected title
-        driverWait().until(ExpectedConditions.presenceOfElementLocated(budgetActivityPage.getActionBarBy()));
-        assertEquals(budgetActivityPage.getPageTitle(), TEST_PAGE_TITLE,
+        switch (TEST_PLATFORM) {
+            case "Android":
+                driverWait().until(ExpectedConditions.presenceOfElementLocated(budgetActivityPage.getActionBarAndroidBy()));
+                break;
+            case "IOS":
+                driverWait().until(ExpectedConditions.presenceOfElementLocated(budgetActivityPage.getActionBarIosBy()));
+                break;
+            default:
+                throw new Exception("Unknown test platform");
+        }
+
+        assertEquals(budgetActivityPage.getPageTitle(TEST_PLATFORM), TEST_PAGE_TITLE,
                 String.format("Expected %s pagetitle, but got %s",
-                        TEST_PAGE_TITLE, budgetActivityPage.getPageTitle()));
+                        TEST_PAGE_TITLE, budgetActivityPage.getPageTitle(TEST_PLATFORM)));
     }
 
-    @AfterGroups(alwaysRun = true, groups = "android_native")
+    @AfterGroups(alwaysRun = true, groups = {"android_native", "ios_native"})
     public void tearDown() throws Exception {
         driver().quit();
     }

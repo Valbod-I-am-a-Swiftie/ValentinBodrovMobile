@@ -38,6 +38,26 @@
         </profile>
 
         <profile>
+            <id>IOSNative</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/IosNative.xml</suite.file>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>AndroidWeb</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <suite.file>src/test/resources/AndroidWeb.xml</suite.file>
+            </properties>
+        </profile>
+
+        <profile>
             <id>IosWeb</id>
             <activation>
                 <activeByDefault>false</activeByDefault>

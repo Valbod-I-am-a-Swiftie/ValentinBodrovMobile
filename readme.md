@@ -10,5 +10,6 @@ certain device
 tests
     * You also can create run configurations in your
      InteliJ Idea. Using TestNG configuration, select
-     group "ios_web" or "android_native" and run your 
-     test
+     group "ios_web", "ios_native", "android_web" or 
+     "android_native" and run your test
+ 
